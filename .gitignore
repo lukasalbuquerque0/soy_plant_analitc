@@ -1,0 +1,25 @@
+# Ambiente Virtual do Python
+venv/
+/venv/
+__pycache__/
+
+# Ficheiros de IDE e Sistema Operacional
+.vscode/
+.idea/
+*.pyc
+*.swp
+.DS_Store
+
+# Vídeos processados e gerados pela aplicação
+processed_videos/
+
+# Ficheiros de modelo YOLO (geralmente são grandes)
+# Se o seu best.pt for muito grande, é melhor não o enviar.
+# Por agora, vamos ignorar a pasta 'runs' inteira.
+runs/
+
+# Ficheiros de log
+*.log
+
+# Ficheiros de ambiente (se usar)
+.env
