@@ -1,3 +1,4 @@
+#src/yolodetectionv3/models/pydantic.models.py
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 from datetime import datetime

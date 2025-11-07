@@ -1,3 +1,4 @@
+#src/yolodetectionv3/services/yolo_services
 import logging
 from ultralytics import YOLO
 import cv2  # Certifique-se que o opencv-python está instalado

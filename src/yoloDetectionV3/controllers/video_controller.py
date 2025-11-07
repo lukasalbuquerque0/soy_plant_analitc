@@ -1,33 +1,36 @@
+# Ficheiro: src/yoloDetectionV3/controllers/video_controller.py
 import os
 import uuid
 from datetime import datetime, timezone
-from fastapi import UploadFile, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-import logging
+from fastapi import UploadFile, HTTPException, status, Depends
+from typing import List
 
-# ✅ CORREÇÃO FINAL: Usamos a importação relativa para a pasta vizinha 'models'
-# A falha anterior estava na importação RELATIVA aqui.
-from ..models.database_models import Analise 
-# 💡 NOTA: A classe Utilizador será importada dentro da função get_user_history para evitar ciclos.
-
-from services.video_processing import process_video_file
-from services.yolo_service import yolo_service
+# ✅ CORREÇÃO: Importações absolutas começando com 'src.'
+from src.yoloDetectionV3.database import get_analise_repo
+from src.yoloDetectionV3.repositories.analise_repository import AnaliseRepository
+from src.yoloDetectionV3.services.video_processing import process_video_file
+from src.yoloDetectionV3.services.yolo_service import yolo_service
+from src.yoloDetectionV3.services.auth import get_utilizador_atual
 from src.yoloDetectionV3.utils.helpers import get_current_timestamp_iso
+from src.yoloDetectionV3.models.pydantic_models import AnaliseResponse, HistoricoAnaliseResponse
+from src.yoloDetectionV3.models.database_models import Utilizador # Para type hint
 
+import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class VideoController:
+    
     async def analyze_video(
         self,
         file: UploadFile,
         latitude: float,
         longitude: float,
         local_texto: str,
-        db: AsyncSession,
-        current_user: 'Utilizador' # Usando string literal para evitar NameError/Ciclo
-    ):
+        analise_repo: AnaliseRepository = Depends(get_analise_repo),
+        current_user: Utilizador = Depends(get_utilizador_atual)
+    ) -> AnaliseResponse:
+        
         if not file.content_type.startswith("video/"):
             raise HTTPException(
                 status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
@@ -37,58 +40,52 @@ class VideoController:
         try:
             unique_filename = f"{uuid.uuid4()}_{file.filename}"
             save_path = os.path.join("processed_videos", unique_filename)
-            
             os.makedirs("processed_videos", exist_ok=True)
 
-            # NOTE: Assumindo que process_video_file é async e funciona
             contagem = await process_video_file(file, save_path) 
             
-            nova_analise = Analise(
+            nova_analise = await analise_repo.create_analise(
                 utilizador_id=current_user.id,
                 nome_arquivo_original=file.filename,
                 video_salvo_em=save_path,
-                
-                data_analise=datetime.utcnow(),
-                
                 contagem_total_unicos=contagem,
                 latitude=latitude,
                 longitude=longitude,
                 local_texto=local_texto
             )
-            db.add(nova_analise)
-            await db.commit()
-            await db.refresh(nova_analise)
             
             logger.info(f"Análise {nova_analise.id} concluída para o utilizador {current_user.username}.")
 
-            return {
-                "id": nova_analise.id,
-                "message": "Vídeo processado com sucesso!",
-                "contagem_total_unicos": contagem
-            }
+            return AnaliseResponse(
+                id=nova_analise.id,
+                message="Vídeo processado com sucesso!",
+                contagem_total_unicos=nova_analise.contagem_total_unicos,
+                nome_arquivo_original=nova_analise.nome_arquivo_original
+            )
 
         except Exception as e:
-            logger.error(f"Erro ao processar o vídeo: {e}")
-            await db.rollback() # Garante que a transação é limpa
+            logger.error(f"Erro ao processar o vídeo: {e}", exc_info=True)
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=f"Não foi possível processar o vídeo. Erro: {str(e)}"
             )
 
-    async def get_user_history(self, db: AsyncSession, current_user: 'Utilizador'):
-        # 💡 Importamos Utilizador AQUI DENTRO para evitar ciclos na inicialização do módulo
-        from ..models.database_models import Utilizador 
-
-        query = select(Analise).where(Analise.utilizador_id == current_user.id).order_by(Analise.data_analise.desc())
-        result = await db.execute(query)
-        historico = result.scalars().all()
+    async def get_user_history(
+        self, 
+        analise_repo: AnaliseRepository = Depends(get_analise_repo),
+        current_user: Utilizador = Depends(get_utilizador_atual)
+    ) -> List[HistoricoAnaliseResponse]:
         
+        historico = await analise_repo.get_historico_por_utilizador(current_user.id)
+        
+        response_list = []
         for analise in historico:
             if analise.data_analise:
-                # Garante que o timestamp é marcado como UTC para o frontend
-                analise.data_analise = analise.data_analise.replace(tzinfo=timezone.utc) 
+                analise.data_analise = analise.data_analise.replace(tzinfo=timezone.utc)
+            # ✅ CORREÇÃO: O Pydantic v2 usa .model_validate()
+            response_list.append(HistoricoAnaliseResponse.model_validate(analise)) 
         
-        return historico
+        return response_list
 
     async def health_check(self):
         model_loaded = yolo_service.is_model_loaded()

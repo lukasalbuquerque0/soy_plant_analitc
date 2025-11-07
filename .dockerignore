@@ -1,0 +1,22 @@
+# Arquivos e pastas a IGNORAR durante a construção da imagem Docker
+
+# 1. Ambientes Virtuais (CRÍTICO - não copiar o venv)
+venv/
+.venv/
+.mypy_cache/
+.pytest_cache/
+
+# 2. Dados de ML, Logs e Resultados (CRÍTICO - muito grandes)
+runs/
+processed_videos/
+temp_uploads/
+
+# 3. Cache do Python
+__pycache__/
+
+# 4. Logs e artefatos do Docker
+docker-compose.yml
+Dockerfile
+.git/
+.gitignore
+*.log
