@@ -1,16 +1,26 @@
-# Ambiente Virtual
+# Ambiente Virtual do Python
+# (Nunca deve ser enviado para o Git)
 venv/
 .venv/
 
-# Cache do Python
+# Arquivo de Segredos e Configurações Locais
+# (NUNCA SUBIR ISTO!)
+.env
+*.env
+
+# Cache e lixo do Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Arquivos de IDE (ex: VSCode)
+# Configurações de Editor
 .vscode/
+.idea/
 
-# Arquivos de sistema
-.DS_Store
+# Arquivos de Saída do Projeto
+processed_videos/
+temp_uploads/
 
-# Arquivos de senhas (MUITO IMPORTANTE)
-.env
+# Arquivos de log
+*.log

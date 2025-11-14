@@ -849,7 +849,6 @@
             justify-content: center;
         }
 
-        /* Container das telas lado a lado */
         .video-comparison-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -880,7 +879,11 @@
             background: #000;
         }
         
+<<<<<<< HEAD
+        .canvas-element { /* Mantido para compatibilidade, caso use em outro lugar */
+=======
         .canvas-element {
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
              width: 100%;
              max-width: 400px;
              border-radius: 10px;
@@ -921,7 +924,6 @@
             font-size: 0.9rem;
         }
 
-        /* Botão de localização automática */
         .location-btn {
             margin-top: 0.5rem;
             padding: 1rem 1.5rem;
@@ -952,7 +954,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
         @media (max-width: 768px) {
             .auth-container { padding: 1rem; }
             .auth-card { padding: 2rem; }
@@ -1006,7 +1007,6 @@
                  align-items: stretch;
              }
         }
-
         @media (max-width: 480px) {
              .auth-card { padding: 1.5rem; }
              .main-content-ultra { padding: 6rem 1rem 1rem; }
@@ -1062,12 +1062,16 @@
                      </div>
                      <div class="form-group">
                          <label class="form-label">NOME DE USUÁRIO</label>
-                         <input type="text" class="form-input" id="loginUsername" placeholder="Insira as suas credenciais">
+                         <input type="text" class="form-input" id="loginUsername" placeholder="Insira as suas credenciais" autocomplete="username">
                      </div>
                      <div class="form-group">
                          <label class="form-label">SENHA</label>
                          <div class="password-input-container">
+<<<<<<< HEAD
+                             <input type="password" class="password-input" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+=======
                              <input type="password" class="password-input" id="loginPassword" placeholder="••••••••">
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                              <button type="button" class="password-toggle" id="loginPasswordToggle">
                                  <i class="fas fa-eye"></i>
                              </button>
@@ -1099,16 +1103,20 @@
                      </div>
                      <div class="form-group">
                          <label class="form-label">NOME DE USUÁRIO</label>
-                         <input type="text" class="form-input" id="regUsername" placeholder="Escolha o seu nome de usuário">
+                         <input type="text" class="form-input" id="regUsername" placeholder="Escolha o seu nome de usuário" autocomplete="username">
                      </div>
                      <div class="form-group">
                          <label class="form-label">EMAIL</label>
-                         <input type="email" class="form-input" id="regEmail" placeholder="email@corporativo.com">
+                         <input type="email" class="form-input" id="regEmail" placeholder="email@corporativo.com" autocomplete="email">
                      </div>
                      <div class="form-group">
                          <label class="form-label">SENHA</label>
                          <div class="password-input-container">
+<<<<<<< HEAD
+                             <input type="password" class="password-input" id="regPassword" placeholder="Crie uma senha segura" autocomplete="new-password">
+=======
                              <input type="password" class="password-input" id="regPassword" placeholder="Crie uma senha segura">
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                              <button type="button" class="password-toggle" id="regPasswordToggle">
                                  <i class="fas fa-eye"></i>
                              </button>
@@ -1134,7 +1142,7 @@
                         <div class="logo-icon">
                             <i class="fas fa-seedling"></i>
                         </div>
-                        <div class="logo-text">TCC</div>
+                        <div class="logo-text">TCC II</div>
                     </div>
                     <div class="nav-actions">
                         <button class="theme-toggle" id="themeToggle" title="Alternar tema">
@@ -1184,7 +1192,7 @@
                                 <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Arraste o Vídeo para Análise</h3>
                                 <p style="color: var(--gray);">Resolução 4K • Máx. 500MB • Todos os Formatos</p>
                                 <p style="color: var(--primary-light); font-size: 0.9rem; margin-top: 0.5rem;">
-                                    <i class="fas fa-robot"></i> Potenciado pela Rede Neural YOLOv8
+                                    <i class="fas fa-robot"></i> Potenciado pela Rede Neural YOLOv11
                                 </p>
                             </div>
 
@@ -1232,7 +1240,7 @@
                                  <div class="card-icon-ultra">
                                      <i class="fas fa-video"></i>
                                  </div>
-                                 <h2 class="card-title-ultra">Deteção em Tempo Real</h2>
+                                 <h2 class="card-title-ultra">Detecção em Tempo Real</h2>
                              </div>
 
                              <div style="text-align: center; padding: 2rem;">
@@ -1359,6 +1367,52 @@
         let totalHistoryItems = 0;
         let allHistoryItems = [];
         let filteredHistoryItems = [];
+<<<<<<< HEAD
+
+        // Variáveis Globais WebRTC
+        let localStream = null;
+        let peerConnection = null;
+        let signalingSocket = null;
+
+        // ===================================================================
+        // FUNÇÕES DE TEMA (CORRIGIDAS)
+        // ===================================================================
+        
+        function initializeTheme() {
+            // ✅ CORREÇÃO: Lê o tema salvo, ou usa 'dark' como padrão
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcons(savedTheme);
+        }
+
+        function toggleTheme() {
+            // ✅ CORREÇÃO: Realmente alterna o tema
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcons(newTheme);
+        }
+
+        function updateThemeIcons(theme) {
+            // ✅ CORREÇÃO: Aceita o 'theme' como argumento
+            const themeToggle = document.getElementById('themeToggle');
+            const themeToggleAuth = document.getElementById('themeToggleAuth');
+            const themeToggleAuthRegister = document.getElementById('themeToggleAuthRegister');
+            
+            // ✅ CORREÇÃO: Usa o 'theme' para definir o ícone
+            const icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+            
+            if (themeToggle) themeToggle.innerHTML = `<i class="fas ${icon}"></i>`;
+            if (themeToggleAuth) themeToggleAuth.innerHTML = `<i class="fas ${icon}"></i>`;
+            if (themeToggleAuthRegister) themeToggleAuthRegister.innerHTML = `<i class="fas ${icon}"></i>`;
+        }
+
+        // ===================================================================
+        // FUNÇÕES DE AUTENTICAÇÃO (LOGIN, REGISTO, LOGOUT)
+        // ===================================================================
+
+=======
 
         // Variáveis Globais WebRTC
         let localStream = null;     // O stream da nossa câmera
@@ -1389,6 +1443,7 @@
         }
 
         // Funções de Autenticação (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         async function login() {
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
@@ -1401,6 +1456,7 @@
             formData.append('password', password);
             try {
                 showNotification('A autenticar...', 'info');
+                // (Assumindo que o servidor está em localhost:8000)
                 const response = await fetch('http://localhost:8000/auth/login', {
                     method: 'POST',
                     body: formData
@@ -1410,7 +1466,11 @@
                     token = data.access_token;
                     localStorage.setItem('authToken', token);
                     localStorage.setItem('username', username);
+<<<<<<< HEAD
+                    currentUser = username; // Define o utilizador atual
+=======
                     currentUser = username;
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                     document.getElementById('userName').textContent = username;
                     document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
                     document.getElementById('authContainer').style.display = 'none';
@@ -1465,15 +1525,79 @@
                 showNotification('Erro de rede. Por favor, tente novamente.', 'error');
             }
         }
+<<<<<<< HEAD
+
+        // ✅ ================================================
+        // ✅ CORREÇÃO: Função de Logout (Reset da UI + Limpeza de Senha)
+        // ================================================
+=======
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function logout() {
+            // ✅ CORREÇÃO: Limpa os campos de login
+            try {
+                 document.getElementById('loginUsername').value = '';
+                 document.getElementById('loginPassword').value = '';
+            } catch (e) {
+                console.error("Erro ao limpar campos de login:", e);
+            }
+
+            // --- O resto da sua função ---
             currentUser = null;
             token = null;
             localStorage.removeItem('authToken');
             localStorage.removeItem('username');
+<<<<<<< HEAD
+
+            // ✅ CORREÇÃO: Reseta o estado da UI (limpa o cache visual)
+            try {
+                // Limpa o Dashboard
+                document.getElementById('totalAnalises').textContent = '0';
+                document.getElementById('totalPlantas').textContent = '0';
+                document.getElementById('mediaPlantas').textContent = '0';
+                
+                // Limpa o Histórico
+                document.getElementById('historyList').innerHTML = '<p style="text-align: center; color: var(--gray); padding: 3rem;">Nenhum histórico de análise encontrado.</p>';
+                document.getElementById('paginationContainer').style.display = 'none';
+                allHistoryItems = [];
+                filteredHistoryItems = [];
+                currentPage = 1;
+                
+                // Limpa a área de Upload
+                const uploadArea = document.querySelector('.upload-area-ultra');
+                if (uploadArea) {
+                    uploadArea.innerHTML = `
+                        <div class="upload-icon-ultra">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Arraste o Vídeo para Análise</h3>
+                        <p style="color: var(--gray);">Resolução 4K • Máx. 500MB • Todos os Formatos</p>
+                        <p style="color: var(--primary-light); font-size: 0.9rem; margin-top: 0.5rem;">
+                            <i class="fas fa-robot"></i> Potenciado pela Rede Neural YOLOv8
+                        </p>
+                    `;
+                }
+                if(document.getElementById('fileInput')) document.getElementById('fileInput').value = null; 
+                if(document.getElementById('analyzeBtn')) document.getElementById('analyzeBtn').disabled = true;
+                if(document.getElementById('resultsContainer')) document.getElementById('resultsContainer').style.display = 'none';
+                
+                // Reseta a aba para "Análise"
+                showTab('analyze', null); // Passa null para evitar erro
+
+            } catch (e) {
+                console.error("Erro ao resetar a UI durante o logout:", e);
+            }
+            // ================================================
+
+=======
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
             document.getElementById('authContainer').style.display = 'flex';
             document.getElementById('mainApp').style.display = 'none';
             showNotification('Sessão terminada com sucesso.', 'success');
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function setupPasswordToggle() {
             const loginToggle = document.getElementById('loginPasswordToggle');
             const loginPassword = document.getElementById('loginPassword');
@@ -1495,7 +1619,11 @@
             }
         }
 
+<<<<<<< HEAD
+        // Funções de Geolocalização
+=======
         // Funções de Geolocalização (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function autofillLocation() {
             if (!navigator.geolocation) {
                 showNotification('Geolocalização não é suportada pelo seu navegador.', 'error');
@@ -1554,17 +1682,41 @@
             return `Localização: ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
         }
 
+<<<<<<< HEAD
+        // Funções de Navegação (CORRIGIDA)
+=======
         // Funções de Navegação (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function showTab(tabName, element) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabName + 'Tab').classList.add('active');
+<<<<<<< HEAD
+            
+            // ✅ CORREÇÃO: Garante que 'element' existe antes de adicionar a classe
+            if (element) {
+                element.classList.add('active');
+            } else {
+                // Fallback se 'element' for nulo (como no reset do logout)
+                // Encontra o primeiro tab e o define como ativo
+                const firstTab = document.querySelector('.tab');
+                if (firstTab) {
+                    firstTab.classList.add('active');
+                }
+            }
+
+=======
             element.classList.add('active');
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
             if (tabName === 'history') loadHistory();
             else if (tabName === 'dashboard') loadDashboardStats();
         }
 
+<<<<<<< HEAD
+        // Funções de Upload de Vídeo
+=======
         // Funções de Upload de Vídeo (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function handleFileSelect(files) {
             if (files.length > 0) {
                 const file = files[0];
@@ -1673,7 +1825,11 @@
             document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
+<<<<<<< HEAD
+        // Funções de Histórico e Paginação
+=======
         // Funções de Histórico e Paginação (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         async function loadHistory() {
              if (!localStorage.getItem('authToken')) return;
             try {
@@ -1811,40 +1967,59 @@
             document.getElementById('paginationContainer').style.display = totalPages > 1 ? 'flex' : 'none';
         }
 
+<<<<<<< HEAD
+        // Funções de Dashboard
+=======
         // Funções de Dashboard (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         async function loadDashboardStats() {
              if (!localStorage.getItem('authToken')) return;
             try {
+                // A API já filtra o histórico pelo token do utilizador
                 const response = await fetch('http://localhost:8000/api/v1/historico', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` }
                 });
                 if (response.ok) {
                     const history = await response.json();
                     updateDashboardStats(history);
+<<<<<<< HEAD
+                } else if (response.status === 401) {
+                    // Se o token for inválido, faz logout
+                    logout();
+=======
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 }
             } catch (error) {
                 console.error('Erro ao carregar estatísticas:', error);
             }
         }
         function updateDashboardStats(history) {
+            // 'history' já é apenas do utilizador atual
             const totalAnalises = history.length;
             const totalPlantas = history.reduce((sum, item) => sum + (item.contagem_total_unicos || 0), 0);
             const mediaPlantas = totalAnalises > 0 ? (totalPlantas / totalAnalises).toFixed(0) : 0;
+<<<<<<< HEAD
+            
+=======
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
             document.getElementById('totalAnalises').textContent = totalAnalises;
             document.getElementById('totalPlantas').textContent = totalPlantas;
             document.getElementById('mediaPlantas').textContent = mediaPlantas;
         }
 
+<<<<<<< HEAD
+        // Funções de Detecção em Tempo Real (WebRTC)
+=======
         // ===================================================================
         // ✅ INÍCIO: FUNÇÕES DE DETECÇÃO EM TEMPO REAL (WEBRTC + LOCALIZAÇÃO)
         // ===================================================================
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function startRealtimeDetection() {
             if (!localStorage.getItem('authToken')) {
                 showNotification('Erro: Você precisa estar logado para usar o tempo real.', 'error');
                 return;
             }
-
             const modalHTML = `
                 <div class="realtime-modal" id="realtimeModal">
                     <div class="realtime-content">
@@ -1854,7 +2029,6 @@
                             </h2>
                             <button class="realtime-close" onclick="closeRealtimeDetection()">×</button>
                         </div>
-
                         <div class="controls-grid">
                             <button id="startCameraBtn" class="btn btn-primary" onclick="startCamera()">
                                 <i class="fas fa-camera"></i> Iniciar Câmera
@@ -1863,7 +2037,6 @@
                                 <i class="fas fa-stop"></i> Parar Câmera
                             </button>
                         </div>
-
                         <div class="video-comparison-container">
                             <div class="video-panel">
                                 <div class="panel-title">
@@ -1875,7 +2048,6 @@
                                     <p>Câmera não iniciada</p>
                                 </div>
                             </div>
-
                             <div class="video-panel">
                                 <div class="panel-title">
                                     <i class="fas fa-robot"></i> DETEÇÃO YOLO (WebRTC)
@@ -1887,7 +2059,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="stats-container">
                             <div id="detectionStats" class="detection-stats">
                                 <i class="fas fa-circle" style="color: var(--gray);"></i> Sistema parado
@@ -1899,11 +2070,13 @@
                     </div>
                 </div>
             `;
-
              if (!document.getElementById('realtimeModal')) {
                  document.body.insertAdjacentHTML('beforeend', modalHTML);
+<<<<<<< HEAD
+=======
                  
                  // Tenta preencher a localização do modal com os dados já existentes na UI
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                  const localTexto = document.getElementById('local').value || currentLocation?.local_texto;
                  if (localTexto) {
                      document.getElementById('locationStats').style.display = 'block';
@@ -1913,12 +2086,19 @@
                  }
              }
         }
+<<<<<<< HEAD
+=======
 
         // ✅ CORREÇÃO: Esta função agora atualiza o Histórico e o Dashboard
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function closeRealtimeDetection() {
             console.log('[WebRTC] Fechando modal...');
             const modal = document.getElementById('realtimeModal');
             if (modal) {
+<<<<<<< HEAD
+                stopCamera(); 
+                modal.remove(); 
+=======
                 stopCamera(); // Para a câmera e a conexão
                 modal.remove(); // Remove o modal da tela
 
@@ -1927,14 +2107,20 @@
                 // ==========================================================
                 // Força o recarregamento do histórico e do dashboard
                 // para mostrar a nova análise que o servidor acabou de salvar.
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 console.log('[UI] Recarregando histórico e dashboard...');
                 loadHistory();
                 loadDashboardStats();
                 showNotification('Sessão em tempo real salva no histórico!', 'success');
+<<<<<<< HEAD
+            }
+        }
+=======
                 // ==========================================================
             }
         }
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         async function startCamera() {
             const authToken = localStorage.getItem('authToken');
             if (!authToken) {
@@ -1942,25 +2128,31 @@
                 closeRealtimeDetection();
                 return;
             }
-
             try {
                 showNotification('Iniciando câmera...', 'info');
+<<<<<<< HEAD
+                stopCamera(); 
+=======
                 stopCamera(); // Limpa conexões anteriores
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 localStream = await navigator.mediaDevices.getUserMedia({
                     video: { width: { ideal: 640 }, height: { ideal: 480 }, frameRate: { ideal: 15 } },
                     audio: false
                 });
-
                 const video = document.getElementById('webcamVideo');
                 const remoteVideo = document.getElementById('processedVideo');
                 const cameraStatus = document.getElementById('cameraStatus');
                 const processingStatus = document.getElementById('processingStatus');
                 const startBtn = document.getElementById('startCameraBtn');
                 const stopBtn = document.getElementById('stopCameraBtn');
+<<<<<<< HEAD
+                if (!video || !remoteVideo || !cameraStatus || !processingStatus || !startBtn || !stopBtn) return;
+=======
 
                 if (!video || !remoteVideo || !cameraStatus || !processingStatus || !startBtn || !stopBtn) return;
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 video.srcObject = localStream;
                 video.style.display = 'block';
                 remoteVideo.style.display = 'block';
@@ -1968,9 +2160,13 @@
                 processingStatus.style.display = 'none';
                 startBtn.disabled = true;
                 stopBtn.disabled = false;
+<<<<<<< HEAD
+                await connectWebRTC(authToken, localStream);
+=======
 
                 await connectWebRTC(authToken, localStream);
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
             } catch (error) {
                 console.error('Erro ao aceder à câmera:', error);
                 let errorMsg = 'Erro ao aceder à câmera. ';
@@ -1980,18 +2176,27 @@
                 stopCamera();
             }
         }
+<<<<<<< HEAD
+=======
 
         // ✅ CORREÇÃO: Esta função agora envia os dados de localização
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         async function connectWebRTC(accessToken, stream) {
             try {
                 peerConnection = new RTCPeerConnection();
                 console.log('[WebRTC] Peer Connection criada.');
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 stream.getTracks().forEach(track => {
                     peerConnection.addTrack(track, stream);
                     console.log('[WebRTC] Track de vídeo local adicionada.');
                 });
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 peerConnection.ontrack = (event) => {
                     console.log('[WebRTC] Track remota recebida (vídeo processado)!');
                     const remoteVideo = document.getElementById('processedVideo');
@@ -2001,7 +2206,10 @@
                         document.getElementById('processingStatus').style.display = 'none';
                     }
                 };
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 peerConnection.onconnectionstatechange = () => {
                     const state = peerConnection.connectionState;
                     console.log(`[WebRTC] Estado da conexão: ${state}`);
@@ -2012,6 +2220,12 @@
                         stopCamera();
                     }
                 };
+<<<<<<< HEAD
+                const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const wsUrl = `${wsProtocol}//localhost:8000/api/v1/webrtc/ws/webrtc?token=${encodeURIComponent(accessToken)}`;
+                console.log('[WebRTC] Conectando ao WebSocket de sinalização:', wsUrl);
+                signalingSocket = new WebSocket(wsUrl);
+=======
 
                 const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
                 const wsUrl = `${wsProtocol}//localhost:8000/api/v1/webrtc/ws/webrtc?token=${encodeURIComponent(accessToken)}`;
@@ -2019,6 +2233,7 @@
                 console.log('[WebRTC] Conectando ao WebSocket de sinalização:', wsUrl);
                 signalingSocket = new WebSocket(wsUrl);
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                 return new Promise((resolve, reject) => {
                     signalingSocket.onopen = async () => {
                         console.log('[WebRTC] Sinalização WS aberta. Criando oferta...');
@@ -2026,6 +2241,15 @@
                         try {
                             const offer = await peerConnection.createOffer();
                             await peerConnection.setLocalDescription(offer);
+<<<<<<< HEAD
+                            const lat = currentLocation?.latitude || parseFloat(document.getElementById('latitude').value) || null;
+                            const lon = currentLocation?.longitude || parseFloat(document.getElementById('longitude').value) || null;
+                            const texto = document.getElementById('local').value || currentLocation?.local_texto || 'Stream WebRTC';
+                            console.log(`[WebRTC] Enviando oferta com localização: ${lat}, ${lon}, ${texto}`);
+                            signalingSocket.send(JSON.stringify({
+                                type: offer.type,
+                                sdp: offer.sdp,
+=======
                             
                             // ✅ ================================================
                             // ✅ Pega a localização ANTES de enviar
@@ -2041,6 +2265,7 @@
                                 type: offer.type,
                                 sdp: offer.sdp,
                                 // ✅ Novos campos de localização
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                                 location: {
                                     latitude: lat,
                                     longitude: lon,
@@ -2053,7 +2278,10 @@
                             reject(err);
                         }
                     };
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                     signalingSocket.onmessage = async (event) => {
                         try {
                             const message = JSON.parse(event.data);
@@ -2062,31 +2290,52 @@
                                 await peerConnection.setRemoteDescription(new RTCSessionDescription(message));
                                 console.log('[WebRTC] Descrição remota definida. Conexão P2P estabelecida!');
                                 resolve();
+<<<<<<< HEAD
+                            } else if (message.type === 'count_update') {
+                                console.log(`[WebRTC] Contagem recebida: ${message.count}`);
+                                updateDetectionStats(`Processando - Plantas: ${message.count}`);
+=======
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                             }
                         } catch (err) {
                             console.error('[WebRTC] Falha ao processar resposta:', err);
                             reject(err);
                         }
                     };
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                     signalingSocket.onerror = (error) => {
                         console.error('[WebRTC] Erro no WebSocket de sinalização:', error);
                         updateDetectionStats('Erro de Sinalização');
                         reject(error);
                     };
+<<<<<<< HEAD
+                    signalingSocket.onclose = (event) => {
+                        console.log(`[WebRTC] Sinalização WS fechada: ${event.code} ${event.reason}`);
+                        if (peerConnection && peerConnection.connectionState !== 'connected' && event.code !== 1000) {
+=======
 
                     signalingSocket.onclose = (event) => {
                         console.log(`[WebRTC] Sinalização WS fechada: ${event.code} ${event.reason}`);
                         if (peerConnection && peerConnection.connectionState !== 'connected') {
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
                             reject(new Error(`Falha na sinalização: ${event.reason || event.code}`));
                         }
                     };
                 });
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
             } catch (error) {
                 console.error('[WebRTC] Falha crítica ao conectar:', error);
                 showNotification('Erro crítico ao conectar com WebRTC', 'error');
                 stopCamera();
+<<<<<<< HEAD
+            }
+=======
             }
         }
 
@@ -2113,8 +2362,28 @@
 
             updateUIAfterCameraStop();
             console.log('[WebRTC] Parada completada.');
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         }
-
+        function stopCamera() {
+            console.log('[WebRTC] Parando câmera e conexões...');
+            if (peerConnection) {
+                peerConnection.close();
+                peerConnection = null;
+                console.log('[WebRTC] Peer Connection fechada.');
+            }
+            if (signalingSocket) {
+                signalingSocket.close(1000, "Parada manual");
+                signalingSocket = null;
+                console.log('[WebRTC] WebSocket de sinalização fechado.');
+            }
+            if (localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+                localStream = null;
+                console.log('[WebRTC] Tracks da câmera local paradas.');
+            }
+            updateUIAfterCameraStop();
+            console.log('[WebRTC] Parada completada.');
+        }
         function updateUIAfterCameraStop() {
             const video = document.getElementById('webcamVideo');
             const remoteVideo = document.getElementById('processedVideo');
@@ -2122,7 +2391,6 @@
             const processingStatus = document.getElementById('processingStatus');
             const startBtn = document.getElementById('startCameraBtn');
             const stopBtn = document.getElementById('stopCameraBtn');
-
             if (video) {
                 video.srcObject = null;
                 video.style.display = 'none';
@@ -2138,15 +2406,37 @@
             }
             if (startBtn) startBtn.disabled = false;
             if (stopBtn) stopBtn.disabled = true;
-            
             updateDetectionStats('Sistema parado');
         }
+<<<<<<< HEAD
+=======
 
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function updateDetectionStats(message) {
             const statsElement = document.getElementById('detectionStats');
             if (statsElement) {
                 const isActive = message.includes('Processando') || message.includes('Conectado');
                 const color = isActive ? 'var(--primary)' : (message.includes('Erro') || message.includes('perdida') ? 'var(--accent)' : 'var(--gray)');
+<<<<<<< HEAD
+                let icon = 'fa-circle';
+                let spinClass = '';
+                if (isActive) {
+                    icon = 'fa-sync';
+                    spinClass = ' fa-spin';
+                } else if (message.includes('Erro') || message.includes('perdida')) {
+                    icon = 'fa-exclamation-circle';
+                } else {
+                    icon = 'fa-power-off';
+                }
+                
+                if (message.includes('Plantas:')) {
+                     statsElement.innerHTML = `<i class="fas fa-leaf" style="color: ${color};"></i> ${message}`;
+                } else {
+                     statsElement.innerHTML = `<i class="fas ${icon}${spinClass}" style="color: ${color};"></i> ${message}`;
+                }
+            }
+        }
+=======
                 const icon = isActive ? 'fa-sync' : (message.includes('Erro') || message.includes('perdida') ? 'fa-exclamation-circle' : 'fa-power-off');
                 const spinClass = isActive ? ' fa-spin' : '';
                 statsElement.innerHTML = `<i class="fas ${icon}${spinClass}" style="color: ${color};"></i> ${message}`;
@@ -2154,6 +2444,7 @@
         }
 
         // Funções de Utilidade (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         function showNotification(message, type) {
             const existingNotifications = document.querySelectorAll(`.notification.${type}`);
             existingNotifications.forEach(notif => notif.remove());
@@ -2173,8 +2464,13 @@
             const icons = { success: 'check-circle', error: 'exclamation-triangle', info: 'info-circle' };
             return icons[type] || 'info-circle';
         }
+<<<<<<< HEAD
+        
+        // Inicialização da Aplicação
+=======
 
         // Inicialização da Aplicação (Sem alterações)
+>>>>>>> b88730dfa75fa9a9c76cc362371501f6ec310006
         document.addEventListener('DOMContentLoaded', function() {
             setupPasswordToggle();
             initializeTheme();
